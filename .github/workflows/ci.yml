@@ -19,9 +19,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Extract Git commit SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: orionpax217/wisecow:latest
+          tags: |
+            orionpax217/wisecow:${{ steps.vars.outputs.sha_short }}
+            orionpax217/wisecow:latest
