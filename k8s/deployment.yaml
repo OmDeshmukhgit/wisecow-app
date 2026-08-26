@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: wisecow-app
+  labels: 
+    app: wisecow
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wisecow
+  template:
+    metadata:
+      labels:
+        app: wisecow
+    spec:
+      containers:
+      - name: wisecow-app
+        image: orionpax217/wisecow:1.0
+        ports: 
+        - containerPort: 4499
+   
